@@ -31,26 +31,26 @@ images for robots, since it is strongly interfaced with
 \url{http://www.ros.org/} (Robot Operating System).\\
 
 We have experienced multiple issues while installing HPP, and even after a
-"succesful" installation, the library doesn't behave well.
+``uccesful'' installation, the library doesn't behave well.
 
 In this short report, we will show multiple flaws in the installation process,
 and what could improve the installation.
 
-\section{First step : Installing ROS}
+\section{First step: Installing ROS}
 
 \subsection{A too strict installer}
-ROS is an operating system for robots, and it is a mandatory dependance of hpp,
+ROS is an operating system for robots, and it is a mandatory dependency of hpp,
 even though we do not want to create bootable images for robots.
 
 Here comes the first issue with the installation of HPP~: It forces to use one
-precise version of ROS: \verb|ros-indigo|.
+precise version of ROS\@: \verb|ros-indigo|.
 
-This version is currently the OldOldStable version of ROS. Thus, it has
+This version is currently the OldOldStable version of ROS\@. Thus, it has
 disappeared from many mirrors and Linux distribution, or depends from many
 packages that have disappeared from Linux distribution.
 
-For now, the only distribution on which we had a "succesful" installation were
-Xubuntu 14.04 and Ubuntu 12.04 .
+For now, the only distribution on which we had a ``uccesful'' installation were
+Xubuntu 14.04 and Ubuntu 12.04.
 
 On more recent Linux distribution, \verb|ros-indigo| has disappeared from the
 repositories. Only \verb|ros-jade| and \verb|ros-kinetic| are available.
@@ -66,7 +66,7 @@ Second issue, if \verb|ros| is not installed in a precise directory
 \subsubsection{On our devices}
 
     Our first try was on our devices (Arch LInux and Debian Stretch)
-    ROS provides a "package manager", which seems to be still quite
+    ROS provides a ``ackage manager'', which seems to be still quite
     experimental, and didn't manage to install \verb|ros|, since relies on the
     distribution of the devices and was unable to install some packages, for
     versioning reasons.
@@ -82,7 +82,7 @@ Second issue, if \verb|ros| is not installed in a precise directory
     installation still failed, for unknown reasons.
 
     We finally created a server with Ubuntu 12.04, the old old stable version of
-    Ubuntu, however still in LTS.
+    Ubuntu, however still in LTS\@.
 
     We eventually managed to install ros-indigo.
 
@@ -91,6 +91,6 @@ Second issue, if \verb|ros| is not installed in a precise directory
 In order to install hpp, we followed the instructions on this webpage
 \url{https://humanoid-path-planner.github.io/hpp-doc/download.html?branch=master}
 
-The depedancy building of \verb|openscenegraph| failed, but an installation
+The dependency building of \verb|openscenegraph| failed, but an installation
 still does the job, even though it should be unnecessary.
 \end{document}
