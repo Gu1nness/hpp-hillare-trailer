@@ -35,4 +35,4 @@ docs/_build/
 *.nav
 *.toc
 *.pyg
-
+*.out

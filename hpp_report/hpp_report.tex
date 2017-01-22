@@ -1,0 +1,96 @@
+\documentclass[a4paper, 11pt, titlepage]{article}
+
+\usepackage{minted}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amsfonts, amssymb}
+\usepackage{hyperref}
+
+\author{Kévin \textsc{Le Run}, Théophile \textsc{Bastian}, Rémi \textsc{Oudin}}
+\title{Installing Humanoid Path Planner~: A Highway to Hell}
+\date{24\textsuperscript{th}; 2017}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\section*{Introduction}
+\label{sec:intro}
+\addcontentsline{toc}{section}{\nameref{sec:intro}}
+
+This short report explaoins our attempts to install Humanoid Path Planner,
+a library created by the \url{http://projects.laas.fr/gepetto/index.php}\\
+
+This library has been developped in the Laas since 2013, and has been designed
+in order to model humanoid robot movements. It is also easy to create usable
+images for robots, since it is strongly interfaced with
+\url{http://www.ros.org/} (Robot Operating System).\\
+
+We have experienced multiple issues while installing HPP, and even after a
+"succesful" installation, the library doesn't behave well.
+
+In this short report, we will show multiple flaws in the installation process,
+and what could improve the installation.
+
+\section{First step : Installing ROS}
+
+\subsection{A too strict installer}
+ROS is an operating system for robots, and it is a mandatory dependance of hpp,
+even though we do not want to create bootable images for robots.
+
+Here comes the first issue with the installation of HPP~: It forces to use one
+precise version of ROS: \verb|ros-indigo|.
+
+This version is currently the OldOldStable version of ROS. Thus, it has
+disappeared from many mirrors and Linux distribution, or depends from many
+packages that have disappeared from Linux distribution.
+
+For now, the only distribution on which we had a "succesful" installation were
+Xubuntu 14.04 and Ubuntu 12.04 .
+
+On more recent Linux distribution, \verb|ros-indigo| has disappeared from the
+repositories. Only \verb|ros-jade| and \verb|ros-kinetic| are available.
+
+Many \verb|ros| distribution are retro-compatible, and thus, the installer
+should check for the latest version available, instead of crashing.
+
+Second issue, if \verb|ros| is not installed in a precise directory
+(\verb|/opt/ros-indigo/|) the installation crashes.
+
+\subsection{Our attempts to install ROS-indigo}
+
+\subsubsection{On our devices}
+
+    Our first try was on our devices (Arch LInux and Debian Stretch)
+    ROS provides a "package manager", which seems to be still quite
+    experimental, and didn't manage to install \verb|ros|, since relies on the
+    distribution of the devices and was unable to install some packages, for
+    versioning reasons.
+
+\subsubsection{On dedicated servers}
+
+    Then, we created a first server, using Debian Jessie, which is supposed to
+    be compatible with ros-indigo.
+
+    Some packages versions had changed, and the installation of ros-indigo failed.
+
+    Trying to use \verb|catkin|, another \verb|ros| package manager, the
+    installation still failed, for unknown reasons.
+
+    We finally created a server with Ubuntu 12.04, the old old stable version of
+    Ubuntu, however still in LTS.
+
+    We eventually managed to install ros-indigo.
+
+\section{Installing HPP}
+
+In order to install hpp, we followed the instructions on this webpage
+\url{https://humanoid-path-planner.github.io/hpp-doc/download.html?branch=master}
+
+The depedancy building of \verb|openscenegraph| failed, but an installation
+still does the job, even though it should be unnecessary.
+\end{document}
