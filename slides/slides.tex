@@ -7,6 +7,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage{tikz}
 \setbeamertemplate{navigation symbols}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -35,7 +36,7 @@
     \frametitle{\subsecname}
     \begin{itemize}
         \item A part of Ros-indigo is a mandatory dependency of HPP.\\
-        \item Indigo is currently the \emph{Old Old Stable} version of ROS.
+        \item Indigo is currently the \emph{Old Old Stable} version of ROS\@.
         \item It supports only Ubuntu 12.04 and Ubuntu 14.04
         \item Any other distributions are either experimental or too modern.
         \item It does not provide support for recent versions of Debian
@@ -48,11 +49,37 @@
 \begin{frame}
     \frametitle{\subsecname}
     \begin{enumerate}
-        \item Try on our computers.
-        \item Create a server with Debian Jessie. Installation of ROS worked,
+        \item Tried on our computers.
+        \item Created a server with Debian Jessie. Installation of ROS worked,
             but hpp failed
-        \item Create a Ubuntu 12.04 Server. Installation of ROS worked,
+        \item Created an Ubuntu 12.04 Server. Installation of ROS worked,
             and hpp eventually succeeded.
     \end{enumerate}
+\end{frame}
+
+\section{HPP Architecture}
+
+\begin{frame}
+    \begin{figure}
+        \begin{center}
+            \begin{tikzpicture}
+                \node at (0,1)
+                {\includegraphics[width=0.1\textwidth]{server_icon.png}};
+                \node[rectangle, draw] (c) at (0,0) {CORBA};
+                \onslide<2->{%
+                    \node[rectangle, draw] (r) at (4,2) {Robots};
+                    \node[rectangle, draw] (o) at (4,0) {Obstacles};
+                    \node[rectangle, draw] (p) at (4,-2) {Problèmes};
+                    \draw[->] (c) edge (r) (c) edge (o) (c) edge (p);
+                }
+                \onslide<3->{%
+                    \node[rectangle, draw] (c1) at (-4,1) {Client};
+                    \node at (-4,0) {$\vdots$};
+                    \node[rectangle, draw] (c2) at (-4,-1) {Client};
+                    \draw[->] (c1) edge (c) (c2) edge (c);
+                }
+            \end{tikzpicture}
+        \end{center}
+    \end{figure}
 \end{frame}
 \end{document}
