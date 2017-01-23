@@ -28,19 +28,20 @@
 %\tableofcontents
 %\end{frame}
 
-\section{Troubles installing Humanoid Path Planner (HPP)}
+\section{Problèmes d'installation de HPP}
 
-\subsection{Installing Robot Operating System (ROS)}
+\subsection{Installation de ROS}
 
 \begin{frame}
     \frametitle{\subsecname}
     \begin{itemize}
-        \item A part of Ros-indigo is a mandatory dependency of HPP.\\
-        \item Indigo is currently the \emph{Old Old Stable} version of ROS\@.
-        \item It supports only Ubuntu 12.04 and Ubuntu 14.04
-        \item Any other distributions are either experimental or too modern.
-        \item It does not provide support for recent versions of Debian
-        \item Arch installation was also broken
+        \item Une partie de ROS indigo en dépendance obligatoire.
+        \item Indigo est actuellement la version \emph{Old Old Stable} de ROS\@.
+        \item Ne fonctionne que sous Ubuntu 12.04 et 14.04
+        \item Toute autre distribution est soit expérimentale soit trop moderne
+        \item Pas de support pour les versions récentes de Debian
+        \item L'installation sous Arch et Xubuntu n'est pas non plus
+            fonctionnelle
     \end{itemize}
 \end{frame}
 
@@ -49,15 +50,13 @@
 \begin{frame}
     \frametitle{\subsecname}
     \begin{enumerate}
-        \item Tried on our computers.
-        \item Created a server with Debian Jessie. Installation of ROS worked,
-            but hpp failed
-        \item Created an Ubuntu 12.04 Server. Installation of ROS worked,
-            and hpp eventually succeeded.
+        \item Essayé nos machines
+        \item Essayé sur un serveur Debian Jessie. ROS ok mais pas HPP\@.
+        \item Essayé sur un serveur Ubuntu 12.04. ROS et HPP ok.
     \end{enumerate}
 \end{frame}
 
-\section{HPP Architecture}
+\section{Architecture de HPP}
 
 \begin{frame}
     \begin{figure}
