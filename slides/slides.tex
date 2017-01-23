@@ -27,5 +27,32 @@
 %\tableofcontents
 %\end{frame}
 
-\end{document}
+\section{Troubles installing Humanoid Path Planner (HPP)}
 
+\subsection{Installing Robot Operating System (ROS)}
+
+\begin{frame}
+    \frametitle{\subsecname}
+    \begin{itemize}
+        \item A part of Ros-indigo is a mandatory dependency of HPP.\\
+        \item Indigo is currently the \emph{Old Old Stable} version of ROS.
+        \item It supports only Ubuntu 12.04 and Ubuntu 14.04
+        \item Any other distributions are either experimental or too modern.
+        \item It does not provide support for recent versions of Debian
+        \item Arch installation was also broken
+    \end{itemize}
+\end{frame}
+
+\subsubsection{Solutions?}
+
+\begin{frame}
+    \frametitle{\subsecname}
+    \begin{enumerate}
+        \item Try on our computers.
+        \item Create a server with Debian Jessie. Installation of ROS worked,
+            but hpp failed
+        \item Create a Ubuntu 12.04 Server. Installation of ROS worked,
+            and hpp eventually succeeded.
+    \end{enumerate}
+\end{frame}
+\end{document}
