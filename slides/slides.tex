@@ -1,3 +1,5 @@
+% vim: :spell spelllang=fr
+
 \documentclass[11pt]{beamer}
 \usetheme{Warsaw}
 \usepackage[utf8]{inputenc}
@@ -9,6 +11,12 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \setbeamertemplate{navigation symbols}{}
+
+\newcommand{\abs}[1]{\left\vert{} #1 \right\vert{}}
+\newcommand{\steer}{\textbf{Dirige}}
+\newcommand{\steerflat}{\steer^\Delta}
+\newcommand{\confspace}{\mathcal{C}}
+\newcommand{\qcusp}{q_{\text{cassure}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \author{Théophile \textsc{Bastian}, Kévin \textsc{Le Run}, Rémi \textsc{Oudin}}
@@ -28,6 +36,8 @@
 %\tableofcontents
 %\end{frame}
 
+% TODO intro : ce qu'on devait faire, pourquoi on l'a pas fait.
+
 \section{Problèmes d'installation de HPP}
 
 \subsection{Installation de ROS}
@@ -45,7 +55,7 @@
     \end{itemize}
 \end{frame}
 
-\subsubsection{Solutions?}
+\subsubsection{Solutions~?}
 
 \begin{frame}
     \frametitle{\subsecname}
@@ -81,4 +91,143 @@
         \end{center}
     \end{figure}
 \end{frame}
+
+%%%%%%%% (Tobast) Hilare pulling a trailer %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{\og{}Hilare pulling a trailer~\fg}
+
+\begin{frame}{Hilare pulling a trailer}
+	\begin{centering}
+		\textit{\Large Motion Planning and Control for Hilare Pulling a
+		Trailer} \\
+		\vspace{1em}
+		{F. Lamiraux, S. Sekhavat, J. P. Laumond} \\
+		\vspace{1em}
+		1999 \\
+	\end{centering}
+\end{frame}
+
+\begin{frame}{Problème à résoudre}
+	\begin{itemize}
+		\item Hilare~: robot à roues, vitesses indépendantes
+		\item Remorque~: attache centrée sur l'axe des roues (A) ou à l'arrière
+			(B)
+		\item Objectif~: planifier une trajectoire (chemin réalisable)
+		\item Système non-holonome
+		\item Contraintes en vitesses/accélérations maximales
+			\[ \abs{v_r} \leq v_{\max} \quad
+			\abs{\omega_r} \leq \omega_{\max} \quad
+			\abs{\dot{v_r}} \leq \dot{v}_{\max} \quad
+			\abs{\dot{\omega_r}} \leq \dot{\omega}_{\max} \]
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Vue d'ensemble}
+	Algorithmes successifs~:
+	\begin{itemize}
+		\item trajectoire \alert{géométrique}, évite les obstacles~;
+			\pause{}
+		\item trajectoire \alert{cinématique}, prend en compte la
+			non-holonomie~;
+			\pause{}
+		\item lissage~;
+	\end{itemize}
+	\hspace{2cm}\alert{$\implies$ chemin}
+			\pause{}
+	\begin{itemize}
+		\item application des contraintes
+	\end{itemize}
+	\hspace{2cm}\alert{$\implies$ trajectoire}
+\end{frame}
+
+\begin{frame}{Trajectoire géométrique}
+	Trajectoire \og{}macroscopique~\fg~: système considéré holonome
+	\begin{itemize}
+		\item Random Path Planner (Barraquand, Latombe, 1991)
+		\item Attraction par \og{}potentiel~\fg{} vers l'objectif
+		\item Si minimum local, mouvement brownien
+		\item On itère
+		\item On lisse
+			\vspace{1em}
+		\item probabilistement complet~: solution existe $\implies$
+			$\mathbb{P}(\text{la trouver}) \rightarrow 1$ (temps recherche
+			$\rightarrow \infty$)
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Non-holonomie}
+	\og{}Propriété topologique~\fg~:
+	\begin{itemize}
+		\item $\confspace$~: configurations $(x, y, \theta, \varphi)$
+		\item $\steer: \confspace \times \confspace \to C^0(\left[0, 1\right],
+			\confspace)$
+		\item $\steer(q_i, q_f)(0) = q_i$
+		\item $\steer(q_i, q_f)(1) = q_f$
+		\item $\forall \varepsilon > 0, \forall \eta > 0$,
+			\[d(q_i, q_f) < \eta \implies \forall t \in [0, 1],
+			d(q_i, \steer(q_i, q_f)(t)) < \varepsilon \]
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Fonction de direction}
+	\begin{itemize}
+		\item Voulue très lisse~!
+		\item première idée~: courbe canonique $\gamma_q$, arc de cercle
+			passant par $q$ conservant $\varphi$
+		\item $\gamma(t) = \alpha(t) \gamma_{q_i}(vt) + (1-\alpha(t))
+			\gamma_{q_f}(vt)$
+		\item atteint un \og{}cône~\fg{}
+		\item ne respecte pas la propriété topologique
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Fonction de direction (cont.)}
+	\begin{itemize}
+		\item mais perturber $q_f$ modifie peu la courbe
+		\item[~] $\implies$ point de cassure
+		\item $d(q_i, q_f)$ faible $\leadsto$ chemin possible par
+			$\qcusp$ en restant proche
+		\item $\leadsto$ $\steerflat$
+	\end{itemize}
+
+	\vspace{-3em}
+	\begin{figure}
+		\flushright{}
+		\includegraphics[width=0.5\textwidth]{img/steer.png}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Chemin cinématique}
+	\begin{itemize}
+		\item Récursivement sur le chemin géométrique
+		\item Si $\steerflat$ peut joindre les points (sans toucher
+			d'obstactles), joindre
+		\item Sinon, séparer en deux bouts et réappliquer
+	\end{itemize}
+
+	\vspace{1em}
+
+	Phase de lissage~:
+
+	\begin{itemize}
+		\item Prendre aléatoirement des points d'arrêt
+		\item Essayer de les joindre avec l'algorithme précédent
+		\item Arrêt quand le nombre de points ne diminue plus
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Trajectoire}
+	\begin{itemize}
+		\item Objectif~: trouver $s : \mathbb{R}_+ \to [0, 1]$ croissante
+			(\og{}temps~\fg)
+		\item $\forall t, q(t) = \gamma(s(t))$
+		\item Représentation des contraintes sur les vitesses, accélérations
+			dans le plan $(s, \dot{s})$
+		\item Utilisation d'accélérations constantes par morceaux \og{}tant que
+			possible~\fg{}
+		\item Bon compromis optimalité-temps de calcul~: calcul embarqué sur
+			Hilare
+	\end{itemize}
+\end{frame}
+
 \end{document}
