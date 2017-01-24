@@ -1,5 +1,3 @@
-% vim: :spell spelllang=fr
-
 \documentclass[11pt]{beamer}
 \usetheme{Warsaw}
 \usepackage[utf8]{inputenc}
@@ -29,7 +27,10 @@
 
 \begin{frame}
 	\titlepage{}
-	\tableofcontents
+\end{frame}
+
+\begin{frame}
+    \tableofcontents
 \end{frame}
 
 %\begin{frame}
@@ -37,6 +38,24 @@
 %\end{frame}
 
 % TODO intro : ce qu'on devait faire, pourquoi on l'a pas fait.
+
+\section*{Introduction}
+
+\begin{frame}
+    \frametitle{\secname}
+    \begin{itemize}
+        \item Projet initial~: Implémenter la méthode décrite dans l'article
+            ``Motion Planning and Control for Hilare Pulling a Trailer''
+            de Laumond et Lamiraux
+        \item Utiliser la bibliothèque HPP pour ceci.
+        \item Ce qu'on va présenter~:
+            \begin{itemize}
+                \item Nos échecs pour installer HPP
+                \item L'architecture de HPP
+                \item L'article sur lequel nous devions travailler
+            \end{itemize}
+    \end{itemize}
+\end{frame}
 
 \section{Problèmes d'installation de HPP}
 
@@ -62,10 +81,48 @@
     \begin{enumerate}
         \item Essayé nos machines
         \item Essayé sur un serveur Debian Jessie. ROS ok mais pas HPP\@.
-        \item Essayé sur un serveur Ubuntu 12.04. ROS et HPP ok.
+        \item Essayé sur un serveur Ubuntu 12.04. ROS et HPP ok. Enfin c'est ce
+            qu'on pensait.
     \end{enumerate}
 \end{frame}
 
+\subsection{Installation de HPP}
+
+\begin{frame}[fragile]
+    \frametitle{\subsecname}
+    \begin{block}{C'est une installation depuis les sources.}
+    \begin{itemize}
+        \item \url{https://humanoid-path-planner.github.io/hpp-doc/download.html?branch=master}
+        \item En théorie, il suffit de télécharger deux fichiers, sourcer un
+            des deux, créer les bons dossiers et utiliiser \verb|make|.
+    \end{itemize}
+    \end{block}
+    \begin{alertblock}{Mais.}
+        \begin{itemize}
+            \item La compilation dure 5 heures. Soit, mais on aimerait avoir un
+                ETA.
+            \item Cmake, un outil classique de compilation est mis comme
+                submodule de tous les dépôts du projet HPP quand bien même le
+                guide d'installation demande de l'installer.
+            \item L'installation packet par packet n'est pas documentée.
+        \end{itemize}
+    \end{alertblock}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Après l'installation}
+    En fait, l'installation n'est pas tout à fait suffisante\dots\\
+    En effet, même après une installation ``réussie'', ça ne fonctionne pas.
+    Plusieurs soucis~:
+    \begin{itemize}
+        \item Il reste quelques fichiers à sourcer à la main~: Presque normal.
+        \item Le Python généré n'est pas tout le temps valide.
+        \item Il y a de soucis d'utilisation du serveur X.
+        \item Par exemple, l'affichage graphique du  tutoriel fourni ne
+            fonctionne pas.
+        \item Problème de dbus ?
+    \end{itemize}
+\end{frame}
 \section{Architecture de HPP}
 
 \begin{frame}

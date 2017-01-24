@@ -1,0 +1,18 @@
+\frametitle{\subsecname}
+    \begin{block}{C'est une installation depuis les sources.}
+    \begin{itemize}
+        \item \url{https://humanoid-path-planner.github.io/hpp-doc/download.html?branch=master}
+        \item En théorie, il suffit de télécharger deux fichiers, sourcer un
+            des deux, créer les bons dossiers et utiliiser \verb|make|.
+    \end{itemize}
+    \end{block}
+    \begin{alertblock}{Mais.}
+        \begin{itemize}
+            \item La compilation dure 5 heures. Soit, mais on aimerait avoir un
+                ETA.
+            \item Cmake, un outil classique de compilation est mis comme
+                submodule de tous les dépôts du projet HPP quand bien même le
+                guide d'installation demande de l'installer.
+            \item L'installation packet par packet n'est pas documentée.
+        \end{itemize}
+    \end{alertblock}
